@@ -4,6 +4,9 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useCallback } from "react";
+import { DoubleSide } from "three";
+import { useThree, useFrame } from "@react-three/fiber";
+import { useSpring } from "@react-spring/three";
 import Navigation from "../../components/Navigation";
 
 type ModelItem = { id: number; path: string };

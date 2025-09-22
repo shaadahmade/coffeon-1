@@ -4,6 +4,8 @@ import { getWordPressPosts } from "@/lib/wordpress";
 import Footer from "@/components/Footer";
 import FloatingImage from "@/components/FloatingImage";
 
+export const dynamic = 'force-dynamic';
+
 export default async function BlogSection() {
   const posts = await getWordPressPosts();
 
