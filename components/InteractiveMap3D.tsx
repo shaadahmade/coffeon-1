@@ -1,71 +1,172 @@
 "use client";
 
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Text, OrbitControls, useGLTF } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
-// Coffee machine locations across Saudi Arabia
+// Utility function to convert lat/lng to 3D coordinates
+function latLngTo3D(lat: number, lng: number, scale = 10) {
+  // Saudi Arabia bounds: approximately 16°N to 32°N, 34°E to 56°E
+  const saudiCenterLat = 24; // Center latitude
+  const saudiCenterLng = 45; // Center longitude
+
+  // Convert to relative coordinates
+  const x = (lng - saudiCenterLng) * scale * 0.5;
+  const z = (saudiCenterLat - lat) * scale * 0.6; // Flip Z for proper orientation
+
+  return [x, 0, z] as [number, number, number];
+}
+
+// Real geographical coffee machine locations across Saudi Arabia
 const coffeeLocations = [
-  { id: 1, name: "Riyadh - King Fahd District", position: [0, 0, 0], city: "Riyadh", status: "active" },
-  { id: 2, name: "Riyadh - Al Olaya District", position: [0.3, 0, 0.2], city: "Riyadh", status: "active" },
-  { id: 3, name: "Jeddah - Al Hamra District", position: [-2.5, 0, -1.2], city: "Jeddah", status: "active" },
-  { id: 4, name: "Dammam - Al Faisaliyah", position: [2.8, 0, 0.8], city: "Dammam", status: "active" },
-  { id: 5, name: "Mecca - Al Aziziyah", position: [-2.2, 0, -0.8], city: "Mecca", status: "active" },
-  { id: 6, name: "Medina - Al Haram District", position: [-1.8, 0, 1.5], city: "Medina", status: "active" },
-  { id: 7, name: "Khobar - Corniche", position: [3.2, 0, 1.2], city: "Khobar", status: "active" },
-  { id: 8, name: "Taif - Al Shafa", position: [-1.5, 0, -0.3], city: "Taif", status: "maintenance" },
-  { id: 9, name: "Abha - City Center", position: [-2.8, 0, -2.1], city: "Abha", status: "active" },
-  { id: 10, name: "Tabuk - Prince Fahd District", position: [-1.2, 0, 2.8], city: "Tabuk", status: "active" },
+  {
+    id: 1,
+    name: "Riyadh - King Fahd District",
+    position: latLngTo3D(24.7136, 46.6753),
+    city: "Riyadh",
+    status: "active",
+    lat: 24.7136,
+    lng: 46.6753
+  },
+  {
+    id: 2,
+    name: "Riyadh - Al Olaya District",
+    position: latLngTo3D(24.6877, 46.7219),
+    city: "Riyadh",
+    status: "active",
+    lat: 24.6877,
+    lng: 46.7219
+  },
+  {
+    id: 3,
+    name: "Jeddah - Al Hamra District",
+    position: latLngTo3D(21.5944, 39.2803),
+    city: "Jeddah",
+    status: "active",
+    lat: 21.5944,
+    lng: 39.2803
+  },
+  {
+    id: 4,
+    name: "Dammam - Al Faisaliyah",
+    position: latLngTo3D(26.4282, 50.1010),
+    city: "Dammam",
+    status: "active",
+    lat: 26.4282,
+    lng: 50.1010
+  },
+  {
+    id: 5,
+    name: "Mecca - Al Aziziyah",
+    position: latLngTo3D(21.3891, 39.8579),
+    city: "Mecca",
+    status: "active",
+    lat: 21.3891,
+    lng: 39.8579
+  },
+  {
+    id: 6,
+    name: "Medina - Al Haram District",
+    position: latLngTo3D(24.4669, 39.6142),
+    city: "Medina",
+    status: "active",
+    lat: 24.4669,
+    lng: 39.6142
+  },
+  {
+    id: 7,
+    name: "Khobar - Corniche",
+    position: latLngTo3D(26.2041, 50.1971),
+    city: "Khobar",
+    status: "active",
+    lat: 26.2041,
+    lng: 50.1971
+  },
+  {
+    id: 8,
+    name: "Taif - Al Shafa",
+    position: latLngTo3D(21.2703, 40.4158),
+    city: "Taif",
+    status: "maintenance",
+    lat: 21.2703,
+    lng: 40.4158
+  },
+  {
+    id: 9,
+    name: "Abha - City Center",
+    position: latLngTo3D(18.2164, 42.5048),
+    city: "Abha",
+    status: "active",
+    lat: 18.2164,
+    lng: 42.5048
+  },
+  {
+    id: 10,
+    name: "Tabuk - Prince Fahd District",
+    position: latLngTo3D(28.3998, 36.5700),
+    city: "Tabuk",
+    status: "active",
+    lat: 28.3998,
+    lng: 36.5700
+  },
 ];
 
-// 3D Coffee Machine Component
+// 3D Coffee Machine Component using actual GLB model
 function CoffeeMachine({ position, isSelected, onClick, location }: any) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const { scene } = useGLTF('/models/model1.glb');
+  const groupRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
 
+  // Clone the scene to avoid instance conflicts
+  const clonedScene = useMemo(() => scene.clone(), [scene]);
+
   useFrame((state) => {
-    if (meshRef.current) {
+    if (groupRef.current) {
       // Gentle floating animation
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+      groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.1;
 
       // Rotation when hovered or selected
       if (hovered || isSelected) {
-        meshRef.current.rotation.y += 0.02;
+        groupRef.current.rotation.y += 0.02;
       }
     }
   });
 
-  const color = location.status === 'active' ? '#ffd700' : '#ff6b6b';
-  const emissiveColor = location.status === 'active' ? '#ffab00' : '#ff3333';
+  // Optimize the model for better performance and quality
+  useEffect(() => {
+    clonedScene.traverse((child: any) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+        // Apply status-based material modifications
+        if (child.material) {
+          if (location.status === 'active') {
+            child.material.emissive = new THREE.Color('#ffd700');
+            child.material.emissiveIntensity = 0.1;
+          } else {
+            child.material.emissive = new THREE.Color('#ff6b6b');
+            child.material.emissiveIntensity = 0.1;
+          }
+          child.material.needsUpdate = true;
+        }
+      }
+    });
+  }, [clonedScene, location.status]);
 
   return (
     <group position={position}>
-      {/* Coffee Machine Base */}
-      <mesh
-        ref={meshRef}
+      <group
+        ref={groupRef}
         onClick={onClick}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
         scale={isSelected ? 1.5 : hovered ? 1.2 : 1}
       >
-        {/* Main Body */}
-        <boxGeometry args={[0.3, 0.4, 0.2]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={emissiveColor}
-          emissiveIntensity={0.2}
-          metalness={0.8}
-          roughness={0.2}
-        />
-      </mesh>
-
-      {/* Coffee Cup on Top */}
-      <mesh position={[0, 0.3, 0]}>
-        <cylinderGeometry args={[0.08, 0.06, 0.1, 16]} />
-        <meshStandardMaterial color="#8B4513" />
-      </mesh>
+        <primitive object={clonedScene} />
+      </group>
 
       {/* Steam Effect */}
       {(hovered || isSelected) && (
@@ -82,8 +183,8 @@ function CoffeeMachine({ position, isSelected, onClick, location }: any) {
       )}
 
       {/* Status Indicator Light */}
-      <mesh position={[0.18, 0.15, 0.12]}>
-        <sphereGeometry args={[0.02, 8, 8]} />
+      <mesh position={[0.3, 0.4, 0]}>
+        <sphereGeometry args={[0.03, 8, 8]} />
         <meshStandardMaterial
           color={location.status === 'active' ? '#00ff00' : '#ff0000'}
           emissive={location.status === 'active' ? '#00ff00' : '#ff0000'}

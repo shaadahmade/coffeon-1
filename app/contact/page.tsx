@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import FlipLink from "@/components/FlipLink";
-import InteractiveMap3D from "@/components/InteractiveMap3D";
 
 export default function ContactPage() {
   return (
@@ -107,7 +106,7 @@ export default function ContactPage() {
             </div>
           </motion.div>
 
-          {/* Interactive 3D Map */}
+          {/* Google Maps */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: 30 }}
@@ -115,10 +114,21 @@ export default function ContactPage() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-4 hover:bg-white/10 transition-all duration-500">
-              <InteractiveMap3D />
+              <div className="w-full h-96 md:h-[450px] rounded-2xl overflow-hidden">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.3914039165395!2d46.67261087512294!3d24.713552577987546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f030f65c5c2e1%3A0x9cd59c18b8e9c8b!2sKing%20Fahd%20District%2C%20Riyadh%20Saudi%20Arabia!5e0!3m2!1sen!2s!4v1647875486192!5m2!1sen!2s"
+                  className="filter brightness-75 contrast-125 saturate-50"
+                />
+              </div>
               <div className="mt-4 text-center">
-                <p className="text-sm text-gray-400">Interactive 3D map - Click on coffee machines to explore locations</p>
-                <p className="text-xs text-gray-500 mt-1">Drag to rotate • Scroll to zoom • Click machines for details</p>
+                <p className="text-sm text-gray-400">King Fahd District, Riyadh - Main coffee machine location</p>
+                <p className="text-xs text-gray-500 mt-1">Operational 24/7 • Premium coffee experience</p>
               </div>
             </div>
           </motion.div>
