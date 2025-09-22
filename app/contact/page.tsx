@@ -59,28 +59,29 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2 text-amber-100">Location</h3>
+                  <h3 className="text-xl font-semibold mb-2 text-amber-100">Primary Location</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    Manhattan, New York<br />
-                    Where coffee dreams come to life
+                    Riyadh, Saudi Arabia<br />
+                    Where premium coffee meets innovation
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Hours Card */}
+            {/* Machine Locations Card */}
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:scale-105">
               <div className="flex items-start space-x-4">
                 <div className="bg-amber-500/20 p-3 rounded-2xl">
                   <svg className="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2 text-amber-100">Office Hours</h3>
+                  <h3 className="text-xl font-semibold mb-2 text-amber-100">Machine Locations</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    Monday – Friday<br />
-                    11:00 AM – 2:00 PM EST
+                    King Fahd District, Riyadh<br />
+                    Al Olaya District, Riyadh<br />
+                    <span className="text-amber-200 text-sm">Available 24/7</span>
                   </p>
                 </div>
               </div>
@@ -114,7 +115,7 @@ export default function ContactPage() {
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-4 hover:bg-white/10 transition-all duration-500">
               <div className="w-full h-96 md:h-[450px] rounded-2xl overflow-hidden bg-slate-800">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.917494176448!2d-73.98715568459396!3d40.74881707932762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259af18a0f3ff%3A0xbaa1d9e0a77e4c3b!2sManhattan%2C%20New%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1694445872980!5m2!1sen!2sus&style=feature:all%7Celement:geometry%7Ccolor:0x212121&style=feature:all%7Celement:labels.icon%7Cvisibility:off&style=feature:all%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:all%7Celement:labels.text.stroke%7Ccolor:0x212121&style=feature:administrative%7Celement:geometry%7Ccolor:0x757575&style=feature:administrative.country%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.locality%7Celement:labels.text.fill%7Ccolor:0xbdbdbd&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:poi.park%7Celement:geometry%7Ccolor:0x181818&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:poi.park%7Celement:labels.text.stroke%7Ccolor:0x1b1b1b&style=feature:road%7Celement:geometry.fill%7Ccolor:0x2c2c2c&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x8a8a8a&style=feature:road.arterial%7Celement:geometry%7Ccolor:0x373737&style=feature:road.highway%7Celement:geometry%7Ccolor:0x3c3c3c&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0x4e4e4e&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:water%7Celement:geometry%7Ccolor:0x000000&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x3d3d3d"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.986147119!2d46.67188141498!3d24.774263850697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2efb027fdf6b35%3A0x3cf72e65bf5bbaa2!2sKing%20Fahd%20District%2C%20Riyadh%20Saudi%20Arabia!5e0!3m2!1sen!2sus!4v1709123456789!5m2!1sen!2sus&style=feature:all%7Celement:geometry%7Ccolor:0x212121&style=feature:all%7Celement:labels.icon%7Cvisibility:off&style=feature:all%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:all%7Celement:labels.text.stroke%7Ccolor:0x212121&style=feature:administrative%7Celement:geometry%7Ccolor:0x757575&style=feature:administrative.country%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.locality%7Celement:labels.text.fill%7Ccolor:0xbdbdbd&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:poi.park%7Celement:geometry%7Ccolor:0x181818&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:poi.park%7Celement:labels.text.stroke%7Ccolor:0x1b1b1b&style=feature:road%7Celement:geometry.fill%7Ccolor:0x2c2c2c&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x8a8a8a&style=feature:road.arterial%7Celement:geometry%7Ccolor:0x373737&style=feature:road.highway%7Celement:geometry%7Ccolor:0x3c3c3c&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0x4e4e4e&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:water%7Celement:geometry%7Ccolor:0x000000&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x3d3d3d"
                   width="100%"
                   height="100%"
                   style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
@@ -124,7 +125,7 @@ export default function ContactPage() {
                 ></iframe>
               </div>
               <div className="mt-4 text-center">
-                <p className="text-sm text-gray-400">Visit us in the heart of Manhattan</p>
+                <p className="text-sm text-gray-400">Find our coffee machines across Riyadh</p>
               </div>
             </div>
           </motion.div>
@@ -150,7 +151,7 @@ export default function ContactPage() {
               <div className="space-y-3 text-gray-300">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
-                  <span>Manhattan, New York</span>
+                  <span>Riyadh, Saudi Arabia</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
@@ -164,7 +165,7 @@ export default function ContactPage() {
               <h4 className="text-lg font-semibold text-amber-100">Get in Touch</h4>
               <div className="space-y-4">
                 <motion.a
-                  href="tel:+48762864075"
+                  href="tel:+966501234567"
                   className="flex items-center space-x-3 text-gray-300 hover:text-amber-300 transition-colors duration-300"
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}
@@ -172,7 +173,7 @@ export default function ContactPage() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <span>(+48) 762 864 075</span>
+                  <span>+966 50 123 4567</span>
                 </motion.a>
                 <motion.a
                   href="mailto:coffeon@studio.com"
