@@ -39,7 +39,13 @@ export default async function BlogSection() {
 
         {/* Blog grid */}
         <div className="mt-12 mb-12 sm:mt-16 grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post: any) => {
+          {posts.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-400 text-lg">No blog posts available at the moment.</p>
+              <p className="text-gray-500 text-sm mt-2">Please check back later for updates!</p>
+            </div>
+          ) : (
+            posts.map((post: any) => {
             const image =
               post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/next.svg";
 
@@ -69,7 +75,8 @@ export default async function BlogSection() {
                 </div>
               </Link>
             );
-          })}
+          })
+          )}
         </div>
       </div>
       <Footer />
