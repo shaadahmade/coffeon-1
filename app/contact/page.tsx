@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import FlipLink from "@/components/FlipLink";
+import InteractiveMap3D from "@/components/InteractiveMap3D";
 
 export default function ContactPage() {
   return (
@@ -77,11 +78,12 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2 text-amber-100">Machine Locations</h3>
+                  <h3 className="text-xl font-semibold mb-2 text-amber-100">Machine Network</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    King Fahd District, Riyadh<br />
-                    Al Olaya District, Riyadh<br />
-                    <span className="text-amber-200 text-sm">Available 24/7</span>
+                    10+ locations across KSA<br />
+                    Riyadh • Jeddah • Dammam<br />
+                    Mecca • Medina • Khobar<br />
+                    <span className="text-amber-200 text-sm">Most locations available 24/7</span>
                   </p>
                 </div>
               </div>
@@ -105,7 +107,7 @@ export default function ContactPage() {
             </div>
           </motion.div>
 
-          {/* Dark Mode Map */}
+          {/* Interactive 3D Map */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: 30 }}
@@ -113,19 +115,10 @@ export default function ContactPage() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-4 hover:bg-white/10 transition-all duration-500">
-              <div className="w-full h-96 md:h-[450px] rounded-2xl overflow-hidden bg-slate-800">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.986147119!2d46.67188141498!3d24.774263850697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2efb027fdf6b35%3A0x3cf72e65bf5bbaa2!2sKing%20Fahd%20District%2C%20Riyadh%20Saudi%20Arabia!5e0!3m2!1sen!2sus!4v1709123456789!5m2!1sen!2sus&style=feature:all%7Celement:geometry%7Ccolor:0x212121&style=feature:all%7Celement:labels.icon%7Cvisibility:off&style=feature:all%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:all%7Celement:labels.text.stroke%7Ccolor:0x212121&style=feature:administrative%7Celement:geometry%7Ccolor:0x757575&style=feature:administrative.country%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.locality%7Celement:labels.text.fill%7Ccolor:0xbdbdbd&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:poi.park%7Celement:geometry%7Ccolor:0x181818&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:poi.park%7Celement:labels.text.stroke%7Ccolor:0x1b1b1b&style=feature:road%7Celement:geometry.fill%7Ccolor:0x2c2c2c&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x8a8a8a&style=feature:road.arterial%7Celement:geometry%7Ccolor:0x373737&style=feature:road.highway%7Celement:geometry%7Ccolor:0x3c3c3c&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0x4e4e4e&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:water%7Celement:geometry%7Ccolor:0x000000&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x3d3d3d"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg)' }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
+              <InteractiveMap3D />
               <div className="mt-4 text-center">
-                <p className="text-sm text-gray-400">Find our coffee machines across Riyadh</p>
+                <p className="text-sm text-gray-400">Interactive 3D map - Click on coffee machines to explore locations</p>
+                <p className="text-xs text-gray-500 mt-1">Drag to rotate • Scroll to zoom • Click machines for details</p>
               </div>
             </div>
           </motion.div>
