@@ -9,7 +9,7 @@ import {
   useGLTF,
 } from "@react-three/drei";
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from "@react-three/postprocessing";
-import { DoubleSide, Vector3, MeshStandardMaterial } from "three";
+import { DoubleSide, Vector3, MeshStandardMaterial, LinearFilter, NearestFilter } from "three";
 import { a, useSpring } from "@react-spring/three";
 
 interface Props {
@@ -93,6 +93,38 @@ function Model({
 }) {
   const { scene } = useGLTF(path);
   const groupRef = useRef<any>();
+
+  // Optimize textures for sharpness
+  React.useEffect(() => {
+    scene.traverse((child: any) => {
+      if (child.isMesh) {
+        if (child.material?.map) {
+          child.material.map.generateMipmaps = true;
+          child.material.map.minFilter = LinearFilter;
+          child.material.map.magFilter = LinearFilter;
+          child.material.map.anisotropy = 4;
+        }
+        if (child.material?.normalMap) {
+          child.material.normalMap.generateMipmaps = true;
+          child.material.normalMap.minFilter = LinearFilter;
+          child.material.normalMap.magFilter = LinearFilter;
+          child.material.normalMap.anisotropy = 4;
+        }
+        if (child.material?.roughnessMap) {
+          child.material.roughnessMap.generateMipmaps = true;
+          child.material.roughnessMap.minFilter = LinearFilter;
+          child.material.roughnessMap.magFilter = LinearFilter;
+          child.material.roughnessMap.anisotropy = 4;
+        }
+        if (child.material?.metalnessMap) {
+          child.material.metalnessMap.generateMipmaps = true;
+          child.material.metalnessMap.minFilter = LinearFilter;
+          child.material.metalnessMap.magFilter = LinearFilter;
+          child.material.metalnessMap.anisotropy = 4;
+        }
+      }
+    });
+  }, [scene]);
 
   // Calculate parallax offset based on depth
   const parallaxMultiplier = isActive ? 0.3 : 0.1; // Active model has more parallax
@@ -271,11 +303,17 @@ export default function Scene3DClient({
     <Canvas
       camera={{ position: [0, 2, 6], fov: 45 }}
       shadows
+      dpr={[1, 2]}
       gl={{
         antialias: true,
         powerPreference: "high-performance",
         toneMappingExposure: 1.5,
-        outputColorSpace: "srgb"
+        outputColorSpace: "srgb",
+        alpha: false,
+        premultipliedAlpha: false,
+        preserveDrawingBuffer: false,
+        stencil: false,
+        depth: true
       }}
     >
       <ParallaxCameraController mousePos={mousePos} />
@@ -291,9 +329,10 @@ export default function Scene3DClient({
         intensity={70}
         color="#ffd4a3"
         castShadow
-        shadow-mapSize={[4096, 4096]}
+        shadow-mapSize={[2048, 2048]}
         shadow-camera-near={0.1}
         shadow-camera-far={25}
+        shadow-bias={-0.00005}
         distance={12}
         decay={1.6}
       />
@@ -396,16 +435,16 @@ export default function Scene3DClient({
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
         <planeGeometry args={[30, 30]} />
         <MeshReflectorMaterial
-          blur={[300, 100]}
-          resolution={1024}
+          blur={[400, 150]}
+          resolution={512}
           mixBlur={1}
-          mixStrength={80}
-          roughness={0.1}
-          depthScale={1.2}
+          mixStrength={60}
+          roughness={0.15}
+          depthScale={1.0}
           minDepthThreshold={0.4}
           maxDepthThreshold={1.4}
           color="#0f0f23"
-          metalness={0.5}
+          metalness={0.4}
         />
       </mesh>
 
@@ -422,26 +461,26 @@ export default function Scene3DClient({
         enablePan={true}
       />
 
-      <EffectComposer multisampling={8}>
+      <EffectComposer multisampling={4}>
         {/* Dramatic bloom for premium lighting */}
         <Bloom
-          intensity={2}
-          kernelSize={3}
-          luminanceThreshold={0.1}
-          luminanceSmoothing={0.4}
-          mipmapBlur
-          radius={0.85}
+          intensity={1.5}
+          kernelSize={2}
+          luminanceThreshold={0.2}
+          luminanceSmoothing={0.3}
+          mipmapBlur={false}
+          radius={0.7}
         />
 
         {/* Chromatic aberration for premium edge effect */}
         <ChromaticAberration
-          offset={[0.0005, 0.0012]}
+          offset={[0.0003, 0.0008]}
         />
 
         {/* Subtle vignette for focus */}
         <Vignette
-          offset={0.5}
-          darkness={0.5}
+          offset={0.4}
+          darkness={0.3}
         />
       </EffectComposer>
     </Canvas>
